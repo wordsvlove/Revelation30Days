@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>啟示錄30天靈修旅程：亂世中的安息與盼望</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        .serif {
+            font-family: 'Noto Serif TC', serif;
+        }
+        .scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scroll-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .active-day {
+            background-color: #e0f2fe;
+            border-left: 4px solid #0ea5e9;
+            color: #0284c7;
+            font-weight: 500;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .text-justify {
+            text-align: justify;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <!-- Mobile Header -->
+    <div class="md:hidden bg-white p-4 shadow-md flex justify-between items-center z-20">
+        <h1 class="text-lg font-bold text-slate-700">啟示錄30天靈修旅程</h1>
+        <button id="menuBtn" class="text-slate-600 focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar / Navigation -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 w-64 bg-white border-r border-gray-200 transition-transform duration-300 ease-in-out z-30 flex flex-col h-full shadow-lg md:shadow-none">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-slate-50">
+            <div>
+                <h2 class="text-xl font-bold text-slate-800 serif">靈修旅程</h2>
+                <p class="text-xs text-slate-500 mt-1">亂世中的安息與盼望</p>
+            </div>
+            <button id="closeSidebar" class="md:hidden text-slate-400">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Day List -->
+        <div class="flex-1 overflow-y-auto scroll-hide" id="dayList">
+            <!-- JavaScript will populate this list -->
+        </div>
+
+        <div class="p-4 border-t border-gray-100 bg-slate-50 text-center text-xs text-slate-400">
+            &copy; 2026 啟示錄靈修計畫
+        </div>
+    </aside>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden transition-opacity duration-300 opacity-0"></div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 h-full overflow-y-auto bg-gray-50 relative w-full" id="mainContent">
+        <div class="max-w-3xl mx-auto p-4 md:p-10 pb-20 fade-in" id="contentContainer">
+            
+            <!-- Navigation Header inside content -->
+            <div class="flex justify-between items-center mb-6 text-sm text-slate-500">
+                <span id="currentDateDisplay">Day 1</span>
+                <span id="progressDisplay">1 / 30</span>
+            </div>
+
+            <!-- Title Section -->
+            <div class="text-center mb-10">
+                <h1 id="dayTitle" class="text-3xl md:text-4xl font-bold text-slate-800 mb-4 serif leading-tight">誰是你生命的老闆？</h1>
+                <div class="inline-block bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    <i class="fas fa-book-open mr-2"></i><span id="scriptureRef">啟示錄 1:1, 8</span>
+                </div>
+            </div>
+
+            <!-- Scripture Card -->
+            <div class="bg-white p-6 md:p-8 rounded-xl card-shadow mb-8 border-l-4 border-blue-500 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 text-blue-100 text-6xl opacity-20">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <p id="scriptureText" class="text-lg md:text-xl text-slate-700 leading-relaxed serif italic relative z-10">
+                    「耶穌基督的啟示，就是神賜給他，要他將必須快要發生的事指示他的眾僕人……主神說：『我是阿拉法，我是俄梅戛，是今在、昔在、以後永在的全能者。』」
+                </p>
+            </div>
+
+            <!-- Devotional Content -->
+            <div class="mb-10">
+                <h3 class="text-lg font-bold text-slate-800 mb-3 border-b pb-2">靈修短文</h3>
+                <div id="devotionalText" class="text-slate-600 leading-8 text-justify text-base md:text-lg">
+                    <!-- Content goes here -->
+                </div>
+            </div>
+
+            <!-- Meditation -->
+            <div class="mb-10 bg-amber-50 p-6 rounded-xl border border-amber-100">
+                <h3 class="text-lg font-bold text-amber-800 mb-4 flex items-center">
+                    <i class="far fa-lightbulb mr-2"></i>深度默想
+                </h3>
+                <ul id="meditationList" class="space-y-4 text-slate-700">
+                    <!-- List items go here -->
+                </ul>
+            </div>
+
+            <!-- Prayer -->
+            <div class="mb-12 bg-slate-800 text-white p-6 md:p-8 rounded-xl shadow-lg relative">
+                <h3 class="text-lg font-bold text-slate-300 mb-4 flex items-center">
+                    <i class="fas fa-praying-hands mr-2"></i>回應禱告
+                </h3>
+                <p id="prayerText" class="leading-relaxed text-slate-200 italic">
+                    <!-- Prayer goes here -->
+                </p>
+                <div class="mt-6 text-right text-sm text-slate-400">奉主耶穌的名禱告，阿們。</div>
+            </div>
+
+            <!-- Footer Navigation -->
+            <div class="flex justify-between items-center mt-8 pt-8 border-t border-gray-200">
+                <button id="prevBtn" class="flex items-center text-slate-500 hover:text-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i class="fas fa-arrow-left mr-2"></i> 上一天
+                </button>
+                <button id="nextBtn" class="flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition transform hover:-translate-y-1">
+                    下一天 <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Data Structure for 30 Days with FULL Content
+        const devotionals = [
+            {
+                day: 1,
+                title: "誰是你生命的老闆？",
+                ref: "啟示錄 1:1, 8",
+                scripture: "「耶穌基督的啟示，就是神賜給他，要他將必須快要發生的事指示他的眾僕人……主神說：『我是阿拉法，我是俄梅戛，是今在、昔在、以後永在的全能者。』」",
+                content: "我們常以為「僕人」是指牧師或教會領袖，但約翰清楚告訴我們，這本書是寫給「眾僕人」的。只要承認耶穌是主，我們就是祂的僕人。在現代職場中，我們習慣當「僱員」，精於計算權益與工時，甚至夢想做自己人生的「老闆」。但「僕人」的心態截然不同——僕人沒有自己的議程，他的一生是為了滿足主人的心意。<br><br>為什麼我們會焦慮？往往是因為我們想掌控結局，卻又力不從心。神說祂是「阿拉法」（起點）也是「俄梅戛」（終點），代表祂掌管著歷史的開始與結束。我們生命中的焦慮，往往來自於我們試圖搶奪那個「老闆」的位置。試著把主權交還給這位全能者吧！如果你今天走進辦公室或處理家務時，心裡想的不是「老闆好難搞」，而是「我正在服事那位永在的全能者」，你的重擔將會輕省許多。",
+                meditation: [
+                    "在你的生活（工作、家庭、金錢）中，哪一個領域是你最想緊抓不放，神卻挑戰你放手當「僕人」的？",
+                    "如果你確信生命的「起點」和「終點」都由神掌管，你今天面對突發狀況的情緒會如何改變？"
+                ],
+                prayer: "親愛的主，我是祢的僕人。但我承認，很多時候我更像是一個焦慮的孤兒，想靠自己掌控一切。謝謝祢告訴我，祢是阿拉法，祢是俄梅戛。今天，我願放下想做自己老闆的驕傲，謙卑聽祢差遣。無論在職場或家中，讓我單單服事祢。"
+            },
+            {
+                day: 2,
+                title: "祂在燈臺中間行走",
+                ref: "啟示錄 1:12-13, 17",
+                scripture: "「我轉過身來……看見了七個金燈臺；在燈臺中間有一位好像人子的……他用右手按著我說：『不要怕。我是首先的，是末後的，又是永活的。』」",
+                content: "約翰在拔摩海島坐牢，看似被世界遺忘。但就在那裡，他看見耶穌「在燈臺（教會）中間」行走。這告訴我們：當你覺得孤單、受困、好像處於人生的「流放地」時，神並沒有在天上袖手旁觀，祂就在你的處境「中間」。<br><br>這是一幅極具安慰的圖畫。我們常以為，當教會遭遇困難，或者當我們感覺孤單、受傷時，神是不是離我們很遠？神是不是在天上袖手旁觀？啟示錄告訴我們：**不，祂就在中間。**<br><br>這位曾死過現在又活的主，拿著死亡和陰間的鑰匙，沒有任何困局能鎖住祂。祂現在就按手在你身上說：「不要怕」。你所面對的困局，鎖不住那位拿著鑰匙的主。",
+                meditation: [
+                    "你現在生命中有哪個部分感覺像是在「拔摩海島」（孤單、受困、無力）？",
+                    "想像耶穌此刻就在那個處境的「中間」行走，並對你說「不要怕」，這對你的心情有什麼影響？"
+                ],
+                prayer: "主耶穌，謝謝祢不是遠在天邊，而是行走在我們中間。在我感到最孤單無助的時候，求祢讓我感受到祢右手的溫度。既然死亡都不能拘禁祢，我相信我的困境也不能攔阻祢的恩典。求祢修剪我，讓我再次為祢發光。"
+            },
+            {
+                day: 3,
+                title: "忙碌中遺失的愛",
+                ref: "啟示錄 2:2, 4",
+                scripture: "「我知道你的行為、勞碌、忍耐……然而，有一件事我要責備你，就是你把起初的愛心拋棄了。」",
+                content: "以弗所教會很忙，忙著做對的事，忙著捍衛真理，卻忙到失去了愛。這是不是你的寫照？我們在職場、家庭、教會忙得團團轉，責任盡了，事情做完了，但心卻變冷了。<br><br>這「起初的愛心」，不是指剛信主時那種情感上的興奮，而是指那種**因為深刻體會到基督十架捨己之愛，而自然流露出的對神、對人的愛**。當事奉變成了責任，當真理變成了批判人的武器，我們就變成了一台冰冷的屬靈機器。<br><br>耶穌警告說，如果不悔改，燈臺會被挪去。這意味著，沒有了愛，教會就失去了存在的意義，再多的事工也只是鳴的鑼、響的鈸。今天，讓我們停下忙碌的腳步，問問自己：我做這一切，是因為愛嗎？",
+                meditation: [
+                    "回想一下，你最近一次在事奉或照顧家人時，感到煩躁、充滿怨氣是什麼時候？那時你的心還是焦點於「愛」嗎？",
+                    "你有多久沒有單單為了耶穌為你死而感動流淚了？"
+                ],
+                prayer: "主啊，被祢說中了。我常常以為只要事情做對了就是好基督徒，但我的愛乾涸了。求祢帶我回到十字架底下，再次被祢的愛充滿。融化我冰冷的心，讓我不是為了「責任」而活，而是為了「愛」而活。"
+            },
+            {
+                day: 4,
+                title: "貧窮中的真富足",
+                ref: "啟示錄 2:9-10",
+                scripture: "「我知道你的患難和貧窮——其實你卻是富足的……你務要至死忠心，我就賜給你那生命的冠冕。」",
+                content: "士每拿教會在物質上是貧窮的，甚至被社會邊緣化，但在耶穌眼裡，他們是「富足」的。我們常因為存摺的數字或職位的高低而焦慮，覺得自己不夠好。但主耶穌重新定義了價值：真正的富足不是擁有多，而是對主忠心。<br><br>在資本主義的都市裡，我們習慣用金錢衡量價值。我們害怕貧窮，害怕缺乏，我們拼命抓取。但主耶穌的價值觀完全顛覆了這一切。<br><br>如果你正因堅持信仰原則而「吃虧」，請聽主的聲音：「我知道。」祂知道你的委屈，祂也定義了你的價值。不要讓世界的價值觀定義你。在永恆的賬簿上，一個忠心跟隨主的人，比擁有全世界卻賠上靈魂的人，富足千萬倍。",
+                meditation: [
+                    "你對於「貧窮」或「缺乏」的恐懼，多大程度上影響了你的決定和心情？",
+                    "如果在神眼中你已經是「富足」的，這會如何改變你對現在困境的看法？"
+                ],
+                prayer: "主啊，這個世界告訴我，沒錢就是失敗。求祢赦免我常因世俗標準而自卑。謝謝祢提醒我，我真正的財富是祢的同在與生命的冠冕。求祢供應我的需用，更提升我的眼光，看見自己因擁有祢而富足。"
+            },
+            {
+                day: 5,
+                title: "門外的敲門聲",
+                ref: "啟示錄 3:17, 20",
+                scripture: "「你說：我是富足的……卻不知道你是困苦、可憐、貧窮、瞎眼、赤身的……看哪，我站在門外叩門……」",
+                content: "老底嘉教會什麼都不缺，唯獨缺了對主的渴慕。這種「不冷不熱」的安逸最危險，因為它讓人以為自己過得很好，不需要神。耶穌戳破這繁華的泡沫，指出靈裡的貧窮。<br><br>這不正是我們這座城市的寫照嗎？我們追求生活品質，我們有各樣的保險、投資，我們以為可以用錢解決大部分的問題。這種安逸，讓我們在屬靈上變得「不冷不熱」。<br><br>但最令人感動的是，這位被我們冷落的主，並沒有離去。祂說：「看哪，我站在門外叩門。」這或許是聖經中最溫柔的一幅畫。祂渴望進來，不是要責備，而是要與我們「坐席」——建立親密的關係。別讓你的安逸，把主關在門外。",
+                meditation: [
+                    "你的生活是否太過安逸，以致於你覺得「不需要」迫切地依靠神？",
+                    "想像耶穌現在就在你心門外叩門，祂想進來與你分享什麼？你願意打開哪一個封鎖已久的房間（心事）給祂嗎？"
+                ],
+                prayer: "主耶穌，我承認我有時像老底嘉人，習慣用物質填補空虛，對祢卻不冷不熱。謝謝祢還在叩門。我願打開我的心，請祢進來，求祢用祢的火煉淨我，恢復我們之間親密的關係。"
+            },
+            {
+                day: 6,
+                title: "天上的控制室",
+                ref: "啟示錄 4:1-2",
+                scripture: "「此後，我觀看，看見天上有一道門開著……見有一個寶座安置在天上，有一位坐在寶座上……」",
+                content: "當地上充滿混亂、壓力和不公時，神邀請約翰「上這裡來」。神讓約翰看見宇宙真正的「控制室」——那裡只有一個寶座，神安坐在其上。<br><br>這是一個強大的政治宣告：當時的羅馬皇帝自稱為神，但啟示錄告訴我們，地上的寶座都是暫時的，真正的權柄在天上。地上的老闆、政權、經濟風暴都不是最終的掌權者。<br><br>這個異象不是為了讓我們逃避現實，而是要給我們力量面對現實。當你知道「誰在掌權」，你就不會被地上的亂象嚇倒。抬頭看天，調整你的焦點，因為真正的控制權在神手中。",
+                meditation: [
+                    "最近有什麼事情讓你覺得「失控」？試著將這件事放在這幅「天上寶座」的圖畫中，會有什麼改變？",
+                    "你的心中是否有其他的「寶座」（如：別人的評價、金錢、兒女的成就）佔據了中心位置？"
+                ],
+                prayer: "全能的主，當我看環境時常覺得心慌。但今天祢讓我看見，天上只有一個寶座，並沒有失控。求祢幫助我常常在禱告中「上這裡來」，因看見祢的榮耀，就能輕看地上的風浪。"
+            },
+            {
+                day: 7,
+                title: "祂配得掌管明天",
+                ref: "啟示錄 5:11-12",
+                scripture: "「我聽見……大聲說：『被殺的羔羊配得權能、豐富、智慧、力量、尊貴、榮耀、頌讚。』」",
+                content: "約翰曾因為沒有人配展開歷史的書卷而大哭，這代表著對未來的絕望。但長老說：「不要哭！獅子已得勝。」但當約翰轉過頭去看這頭威猛的「獅子」時，他看見的竟然是一隻「被殺的羔羊」。<br><br>這是震撼的信息：真正的得勝不是靠武力，而是靠犧牲的愛。世上的君王靠流別人的血來建立權力，但我們的王靠流自己的血來救贖子民。因為祂曾為你捨命，所以祂「配得」掌管你的明天。<br><br>這給了我們極大的安慰：掌管我們未來的，不是一位冷酷的獨裁者，而是一位愛我們、為我們捨命的救主。你的未來在祂手中，絕對安全。",
+                meditation: [
+                    "你生命中有些「書卷」（難題或未來）是你打不開、解不開的嗎？你是否願意交給那位「配得」的羔羊？",
+                    "「獅子」與「被殺的羔羊」是同一位。這對你理解「能力」和「愛」有什麼啟發？"
+                ],
+                prayer: "被殺的羔羊，我的主耶穌。當我知道掌管歷史、掌管我明天的，是祢這位為我流血捨命的主，我就感到無比的安心。我不必再為未知的將來恐懼哭泣。祢是配得的！我願將我的人生完全交託給祢。"
+            },
+            {
+                day: 8,
+                title: "災難背後的韁繩",
+                ref: "啟示錄 6:1-2",
+                scripture: "「我看見羔羊揭開七個印中第一個印的時候……看見一匹白馬，騎在馬上的拿著弓，並有冠冕賜給他。」",
+                content: "當第一印揭開，騎士出現，這象徵著地上的戰爭與征服。看新聞時，戰爭、瘟疫、經濟動盪常讓我們驚恐。但經文有一個細節：「有冠冕**賜給**他」。<br><br>這顯示即便是災難的執行者，他們的權力也是「被賜予」的（受限的），而非源於自己。這世界看似失控，其實那條韁繩始終握在羔羊手中。災難雖然可怕，但它不是結局，神仍在掌權。<br><br>當我們面對無法控制的環境時，要記得：哪怕是風浪，也在主的權柄之下。祂不是製造災難的神，但在災難中，祂依然坐著為王。",
+                meditation: [
+                    "當你看到社會動盪或天災人禍時，你的第一個反應是恐慌，還是尋求神的旨意？",
+                    "「權柄是賜給的」意味著神限制了惡者的作為。這個真理如何幫助你面對目前的困難？"
+                ],
+                prayer: "主啊，面對動盪的時局，我常感到渺小和恐懼。但祢的話語提醒我，即便是風浪和災難，都在祢的權柄之下。求祢賜我信心，不看環境的險惡，只看握著韁繩的羔羊。願我在震動中，站立得穩。"
+            },
+            {
+                day: 9,
+                title: "伸冤要等到幾時？",
+                ref: "啟示錄 6:9-10",
+                scripture: "「我看見在祭壇底下有曾為神的道……被殺的人的靈魂，大聲喊著說：『神聖真實的主宰啊，你不審判……要到幾時呢？』」",
+                content: "這世界充滿了不公義：職場的霸凌、無辜者受害、惡人逍遙法外。我們心中常吶喊：「神啊，祢為什麼不插手？要等到幾時？」祭壇下的呼聲告訴我們，神沒有對這些冤屈充耳不聞。<br><br>祂的「等待」不是因為無能，也不是因為冷漠，而是為了讓救贖的數目滿足。你的每一滴眼淚，神都記在賬上；祂的審判遲延，是為了寬容，也是為了更完美的公義。<br><br>神沒有忘記你所受的委屈。祂是神聖真實的主宰，審判的日子終必來到。但在那日之前，祂呼召我們忍耐，並信靠祂的時間。",
+                meditation: [
+                    "你心中是否有無法釋懷的委屈或不平？試著把它帶到神的祭壇前，誠實地問祂：「要到幾時？」",
+                    "神的「等待」往往是為了更多的救贖。這是否能調整你對「遲延」的看法？"
+                ],
+                prayer: "神聖真實的主宰，我看見不義的事心裡就憤憤不平。求祢安撫我的躁動，讓我知道祢是公義的審判者。當我覺得祢遲延的時候，提醒我祢有更完美的時刻。我願將審判的主權交還給祢，專心做好祢託付我的見證。"
+            },
+            {
+                day: 10,
+                title: "誰能站得住呢？",
+                ref: "啟示錄 6:15-17",
+                scripture: "「地上的君王……都藏在山洞和巖石穴裏……說：『……躲避坐寶座者的臉面和羔羊的憤怒……誰能站得住呢？』」",
+                content: "當末後的震動來臨，無論是君王、富戶還是平民，在神的威嚴面前都無處可躲。金錢、地位、勢力，在審判的日子全都失效。<br><br>世人害怕羔羊的憤怒，想找地方躲藏；但神的兒女不需要躲藏，因為我們在基督裡已經藏好了。這段經文提醒我們，不要羨慕地上看似穩固的權勢，因為唯有在基督這塊「萬古磐石」上，我們才能在震動中站立得住。<br><br>真正的安全感，不在於你擁有多少資產，而在於你「藏」在哪裡。若你藏在基督裡，即便是天崩地裂，你也能坦然無懼。",
+                meditation: [
+                    "你現在倚靠什麼作為你的安全感（存款、職位、人脈）？如果這些都被震動，你還能站立嗎？",
+                    "對於「羔羊的憤怒」，你是感到恐懼想逃，還是因著被救贖而感到敬畏與感恩？"
+                ],
+                prayer: "主啊，世人依靠山洞和磐石，但我依靠祢的聖名。當震動來臨時，求祢讓我不是恐懼地逃避，而是坦然地站立。因為我的生命已經藏在基督裡，祢是我的避難所，是我隨時的幫助。"
+            },
+            {
+                day: 11,
+                title: "風暴中的印記",
+                ref: "啟示錄 7:2-3",
+                scripture: "「我看見另有一位天使……拿著永生神的印……說：『你們不可傷害地、海和樹林，等我們在我們神眾僕人的額上蓋了印。』」",
+                content: "在毀滅性的風暴來臨前，神做的第一件事是「蓋印」。這代表了兩件事：所有權（你是屬神的）和保護（神負責到底）。就像快遞包裹上的「易碎品」貼紙，提醒搬運者要小心；神在我們額上的印記，宣告了我們在災難中受到特別的屬靈保護。<br><br>雖然我們身體可能仍會經歷苦難，但我們的靈魂因著這印記，沒有任何勢力能夠奪去。這印記是聖靈的憑據，是我們身分的名牌。<br><br>在動盪的世代，知道自己「屬於誰」是最大的定心丸。既然神已經在你身上蓋了章，祂就會對你負責到底。",
+                meditation: [
+                    "你是否確信自己是「屬神」的？這個身分給你帶來什麼樣的安全感？",
+                    "「蓋印」不代表免除苦難，但保證了靈魂的安全。這對你面對未知的將來有何安慰？"
+                ],
+                prayer: "親愛的天父，謝謝祢在我身上蓋了屬祢的印記。這世界雖然充滿危險和風暴，但我知道我是屬祢的，祢必負責到底。求祢讓這個印記成為我心中的確據，無論遭遇什麼，我都深知沒有人能將我從祢手中奪去。"
+            },
+            {
+                day: 12,
+                title: "擦去一切眼淚",
+                ref: "啟示錄 7:14, 17",
+                scripture: "「這些人是從大患難中出來的……神必擦去他們一切的眼淚。」",
+                content: "這是《啟示錄》最溫柔的一幕。這群身穿白衣的人，不是溫室裡的花朵，而是從「大患難」中走出來的戰士。他們受過傷、流過淚，但他們得勝了。在終點等著他們的，不是嚴厲的教官，而是溫柔的牧者。<br><br>神親自擦去他們的眼淚——這是極親密的動作，代表神完全理解並接納我們在世上的痛。你的苦難不會白費，它將轉化為榮耀的印記。<br><br>當你覺得快撐不下去時，請記得終點的畫面。現在的淚水，將來都會被主溫柔的手輕輕拭去。那是何等大的安慰。",
+                meditation: [
+                    "你現在是否正處於某種「患難」之中？想像神親自擦去你的眼淚，這畫面給你什麼感受？",
+                    "「從患難中出來」暗示苦難是過程而非終點。這給你帶來什麼盼望？"
+                ],
+                prayer: "慈愛的牧者，謝謝祢看見我流下的每一滴眼淚。當我在患難中覺得快要撐不下去時，求祢讓我看見終點那溫柔的擁抱。我知道現在的苦楚是短暫的，祢的安慰是永恆的。求祢領我到生命水的泉源，使我的心重新得力。"
+            },
+            {
+                day: 13,
+                title: "暴風雨前的寂靜與祈禱",
+                ref: "啟示錄 8:1, 3-4",
+                scripture: "「羔羊揭開第七個印的時候，天上寂靜約有半小時……有許多香賜給他，要和眾聖徒的祈禱一同獻在寶座前的金壇上。」",
+                content: "這「半小時的寂靜」震耳欲聾。為什麼全宇宙都要安靜下來？是為了**聽你禱告**。神看重聖徒的祈禱，甚至叫天使暫停，專心處理這些「香」。<br><br>你的禱告可能微弱、斷續，覺得神沒在聽，但在天上，這些禱告被慎重地收集在金壇上，成為推動歷史、帶下神作為的關鍵。不要輕看你的禱告，那是震動天地的力量。<br><br>當你在地上跪下時，天上的運作就改變了。這不是因為我們有能力，而是因為垂聽我們的那位神，樂意回應祂兒女的呼求。",
+                meditation: [
+                    "你是否曾覺得禱告像在對空氣說話？這段經文如何改變你對禱告的看法？",
+                    "在忙碌的生活中，你能否每天留出一段「寂靜」的時間，專心地將你的「香」獻給神？"
+                ],
+                prayer: "主啊，我常以為我的禱告微不足道，沒想到祢竟然叫天上的萬軍安靜，只為聽我的聲音。這份重視讓我戰兢又感動。求祢赦免我懶於禱告的罪，願我的禱告如香陳列在祢面前，成為推動祢旨意成就的力量。"
+            },
+            {
+                day: 14,
+                title: "罪惡的毒鉤",
+                ref: "啟示錄 9:4-6",
+                scripture: "「惟獨可傷害額上沒有神印記的人……只可使他們受痛苦五個月……這痛苦就像人被蠍子螫了的痛苦一樣。」",
+                content: "第五號吹響，無底坑的蝗蟲出來傷人。這是一種屬靈的災害，象徵著罪惡帶來的痛苦與折磨。這種痛「叫人求死卻死不了」，像蠍子螫人一樣，雖不致命卻極其痛苦。<br><br>這正是罪的本質：沈迷毒品、情慾、仇恨、嫉妒，起初看似快樂，最後卻是無盡的折磨與空虛。罪惡不是自由，而是最可怕的奴役。<br><br>但感謝主，額上有神印記的人（基督徒）對此有免疫力。我們在基督裡，已經脫離了罪的毒鉤。我們有能力對罪說「不」，有能力活在自由中。",
+                meditation: [
+                    "你是否看過身邊的人（或自己）陷入某種罪的綑綁，雖痛苦卻無法自拔？",
+                    "作為受印記的人，你是否意識到自己有能力拒絕罪的誘惑？你要如何運用這屬靈的免疫力？"
+                ],
+                prayer: "主啊，看見這世界的罪惡帶來的折磨，我心裡戰兢。謝謝祢保護我，讓我免受那毒蠍的傷害。求祢保守我的心，不給魔鬼留地步。也求祢憐憫那些在罪中受苦的人，讓他們看見真光，脫離那無底坑的痛苦。"
+            },
+            {
+                day: 15,
+                title: "亦甜亦苦的使命",
+                ref: "啟示錄 10:9-10",
+                scripture: "「他對我說：『你拿去，把它吃光。它會使你肚子發苦，然而在你口中會甘甜如蜜。』」",
+                content: "約翰領受了一卷小書卷，吃下去時口中甘甜，肚子卻發苦。這正是我們跟隨主的真實寫照。領受神的道是甜蜜的，因為那是真理與救恩；但當我們要把這道活出來，甚至傳出去時，往往會伴隨著誤解、拒絕與艱難，這就是「苦」。<br><br>許多現代信徒只想要信仰的「甜」（平安、祝福），卻拒絕使命的「苦」（付代價、受委屈）。但神邀請我們「吃光」它——完整地接納信仰的兩面。<br><br>只有經過苦的淬鍊，生命才能結出真實的果子。這苦不是徒然的，它是為了讓神的道在我們生命中產生真實的轉化，並讓我們能體會基督的心腸。",
+                meditation: [
+                    "你是否只喜歡聽安慰的信息，卻逃避神對你生命的挑戰？",
+                    "在目前的生活中，為了持守真理，你正在經歷什麼樣的「苦」？"
+                ],
+                prayer: "主啊，我承認我喜歡恩典的甘甜，卻害怕背十字架的苦楚。求祢賜我勇氣，不只作一個享受恩典的消費者，更作一個願意付代價的跟隨者。願這亦甜亦苦的道，在我生命中化為真實的力量。"
+            },
+            {
+                day: 16,
+                title: "量一量神的殿",
+                ref: "啟示錄 11:1-2",
+                scripture: "「有一根蘆葦……賜給我；且有話說：『起來！將神的殿和祭壇，以及在殿中禮拜的人，都量一量。只是殿外的院子不用量……』」",
+                content: "神吩咐約翰去「量」聖殿，這個動作代表了神的保護與屬權。值得注意的是，「殿外的院子」不用量，因為那是給外邦人踐踏的。<br><br>這給我們極大的安慰：在世上，我們的外在環境（身體、財產、名譽）可能會受到攻擊和踐踏，就像那殿外的院子；但我們內在的生命（神的殿），是有神親自量度與保守的範圍，任何勢力都無法侵犯。<br><br>守住你的心，因為那是神居住的所在。即便外在風雨飄搖，你內在的聖所依然可以有屬天的平安。這是仇敵奪不走的。",
+                meditation: [
+                    "當外在環境（工作、健康）受到打擊時，你是否覺得神棄絕了你？",
+                    "知道你內在的生命有神親自劃定的保護界線，這給你什麼安全感？"
+                ],
+                prayer: "親愛的主，謝謝祢，雖然外面的世界風雨飄搖，甚至我的外在生活受到衝擊，但祢承諾保守我的心懷意念。求祢幫助我守護好內心的聖殿，那是祢居住的所在，是仇敵無法奪去的平安之地。"
+            },
+            {
+                day: 17,
+                title: "曠野中的避難所",
+                ref: "啟示錄 12:6",
+                scripture: "「婦人就逃到曠野，在那裏有神給她預備的地方，使她在那裏被供養一千二百六十天。」",
+                content: "在啟示錄中，這婦人象徵著教會。當大紅龍（撒但）逼迫教會時，她逃到了「曠野」。我們常以為曠野是荒涼、受苦之地，但在神的劇本裡，曠野是祂「預備的地方」，是供應與保護之處。<br><br>就像當年以色列人在曠野吃嗎哪一樣，當你在職場或生活中感到孤立無援，彷彿身處曠野時，請記得：這正是神要親自供養你的時刻。曠野不是終點，而是經歷神蹟的起點。<br><br>神有時會把我們帶到曠野，不是為了撇棄，而是為了單獨與我們相會，讓我們學會單單倚靠祂的供應。",
+                meditation: [
+                    "你現在是否覺得自己正處於某種「曠野」之中（資源匱乏、無人理解）？",
+                    "回想過去，神曾在你看似缺乏的時刻，如何奇妙地供應了你？"
+                ],
+                prayer: "信實的供應者，當我身處曠野，眼前盡是荒涼時，求祢打開我的靈眼，看見這是祢「預備的地方」。我不求立刻離開曠野，但我求祢在曠野中降下嗎哪，讓我經歷祢超自然的供養與同在。"
+            },
+            {
+                day: 18,
+                title: "控告者的墜落",
+                ref: "啟示錄 12:10-11",
+                scripture: "「因為那個在我們神面前、晝夜控告我們弟兄的，已經被摔下去了。弟兄勝過那條龍是因羔羊的血，和因自己所見證的道。」",
+                content: "撒但最厲害的武器不是災難，而是「控告」。牠晝夜在神面前，也在你的良心中說：「你很糟、你不配、神不會愛你。」許多信徒一生都活在這種罪疚感與自我定罪中。<br><br>但約翰看見了天上的法庭判決：控告者已經被摔下去了！我們得勝，不是因為我們做得完美，而是因為「羔羊的血」。不要再聽信那腦海中的控告聲，要大聲宣告基督寶血的功效。<br><br>當你感到羞愧、不配時，不要逃避神，而是要轉向十字架。那裡有赦免，有接納，有勝過控告的力量。",
+                meditation: [
+                    "你腦海中是否常有自我控告的聲音？那聲音是叫你悔改歸向神，還是叫你絕望遠離神？",
+                    "「勝過牠是因羔羊的血」，下次當你感到羞愧不配時，試著用這句話來抵擋控告。"
+                ],
+                prayer: "主耶穌，謝謝祢流出的寶血，已經洗淨我一切的罪。我拒絕接受撒但的控告，我拒絕活在自我定罪中。我要宣告：控告者已經失敗，我是被神接納的兒女。求祢讓我在祢的恩典中，抬起頭來。"
+            },
+            {
+                day: 19,
+                title: "拒絕被世界標記",
+                ref: "啟示錄 13:16-17",
+                scripture: "「牠又使眾人……都在右手上，或是在額上，打一個印記……除了那有印記……都不得買或賣。」",
+                content: "這是一段常被誤解的經文。「666」和獸的印記，不一定是某個條碼或晶片，它象徵著一種「從屬關係」。當時的人若不宣示效忠凱撒，就無法進行商業交易，無法生存。<br><br>這正是現代信徒的掙扎：為了生計（買或賣），我們是否要在額上（思想）和手上（行為）接受世界的價值觀？如果不說謊、不妥協就無法「發財」，你還願意堅持嗎？拒絕獸的印記，意味著在經濟壓力下，依然單單效忠基督。<br><br>這是一個艱難的選擇，但神應許供應那些忠心於祂的人。不要為了暫時的利益，出賣永恆的靈魂。",
+                meditation: [
+                    "在你的工作中，是否曾面臨「如果不配合某種潛規則，就無法獲利」的壓力？",
+                    "你的「額上」（思想）和「手上」（行為），是被世界的邏輯標記，還是被神的真理標記？"
+                ],
+                prayer: "主啊，生存的壓力是真實的，「不得買賣」的恐懼常試探我妥協。求祢賜我勇氣，拒絕被世界的價值觀蓋章。即使因此損失利益，我也要保守我額上那屬神的印記。因為祢是我的供應者，我不靠巴比倫的體系而活。"
+            },
+            {
+                day: 20,
+                title: "專一的跟隨",
+                ref: "啟示錄 14:4-5",
+                scripture: "「羔羊無論往哪裏去，他們都跟隨他……在他們口中找不出謊言，他們是沒有瑕疵的。」",
+                content: "這十四萬四千人象徵著全體得勝的教會。他們最大的特質不是能力高強，而是「專一」。經文形容他們「未曾沾染婦女」（靈性上的貞潔），且羔羊「無論」往哪裡去，他們都跟隨。<br><br>在這個充滿選擇、強調「斜槓」的時代，我們的心很容易分散。我們想跟隨羔羊，但也想跟隨世界的潮流。主在尋找一群心無旁騖的跟隨者，無論順境逆境，眼目只鎖定祂。<br><br>跟隨羔羊，有時會經過青草地，有時會經過死蔭幽谷。但關鍵不在於環境，而在於我們跟隨的是誰。只要有主同在，哪裡都是好地方。",
+                meditation: [
+                    "你的心是否分為兩半？一半想跟隨主，一半又放不下世界的享受？",
+                    "「羔羊無論往哪裡去」，即使是往受苦的道路去，你還願意跟隨嗎？"
+                ],
+                prayer: "主啊，赦免我心懷二意。我常在順境時跟隨祢，在逆境時就想轉身。求祢賜我一顆單純的心，像貞潔的童女，單單愛慕祢。無論祢領我到青草地還是死蔭幽谷，我都願緊緊跟隨。"
+            },
+            {
+                day: 21,
+                title: "收割的時候到了",
+                ref: "啟示錄 14:14-16",
+                scripture: "「看見有一片白雲，雲上坐著一位好像是人子的……手裏拿著鋒利的鐮刀……因為收割的時候已經到了。」",
+                content: "農夫撒種，是為了收割。人類歷史不會無限期地空轉下去，神有一個收割的時間表。這對我們有兩層意義：第一是審判，神要處理地上的罪惡（收取葡萄釀酒）；第二是希望，神要收聚祂的子民（收割莊稼）。<br><br>當你覺得世界混亂、惡人當道時，請記得：鐮刀已經在人子手中。莊稼熟了，神必動手。我們只需忍耐等候，並把握時間作工。<br><br>知道有「收割」的一天，會讓我們對現在所做的每一件事都更加認真。我們不是在虛度光陰，而是在為那最終的收成做準備。",
+                meditation: [
+                    "「歷史有終點」這個事實，會如何影響你今天的時間規劃？",
+                    "如果今天就是收割的日子，你的生命是飽滿的麥子，還是空殼？"
+                ],
+                prayer: "掌管季節的主，我知道祢有祢的時間。當我看見不公義時，提醒我審判在祢手中。也求祢指教我數算自己的日子，好讓我把握現在的機會，預備自己成為成熟的莊稼，歡喜迎接祢的收割。"
+            },
+            {
+                day: 22,
+                title: "玻璃海上的凱歌",
+                ref: "啟示錄 15:2-3",
+                scripture: "「我看見彷彿有攙雜火的玻璃海；又看見那些勝了那獸和獸像……的人，都站在玻璃海上……唱神僕人摩西的歌和羔羊的歌。」",
+                content: "這是一幅極美的勝利圖畫。玻璃海象徵著平靜（不再有風浪），但也攙雜著火（經過審判與試煉）。這群人之所以能站在上面唱歌，是因為他們「勝了」。他們不是靠武力得勝，而是靠著至死忠心。<br><br>此刻，你可能正身處波濤洶湧的大海中，與獸的體系搏鬥；但請抬頭看，終點是平靜的玻璃海。那首凱旋的歌，是為你預備的。<br><br>你現在的掙扎不是結局，而是凱歌的前奏。堅持下去，因為你已經看見了未來的畫面：你站在玻璃海上，與眾聖徒一同高唱得勝的樂歌。",
+                meditation: [
+                    "你現在正處於風浪中嗎？這幅「站在玻璃海上」的圖畫給你什麼盼望？",
+                    "摩西的歌是過紅海後的讚美，你生命中是否也有經歷神拯救後所唱的凱歌？"
+                ],
+                prayer: "得勝的主，現在的風浪好大，我有時覺得快要淹沒。但謝謝祢讓我看見未來的景象——我將站在平靜的玻璃海上，唱著讚美的歌。求祢讓這幅圖畫成為我今天的力量，堅持游過這片試煉之海。"
+            },
+            {
+                day: 23,
+                title: "從那城出來",
+                ref: "啟示錄 18:4-5",
+                scripture: "「我又聽見另一個聲音從天上說：『我的民哪，從那城出來吧！免得和她在罪上有份，受她所受的災殃。』」",
+                content: "巴比倫象徵著極致繁榮、奢華、卻抵擋神的世俗體系。她很有吸引力，能滿足人的眼目情慾和驕傲。神沒有叫我們在物理上搬到深山隱居，而是呼召我們在靈性上「從那城出來」。<br><br>這意味著：身在世界，卻不屬世界。不要讓巴比倫的價值觀（貪婪、剝削、享樂主義）同化你。當所有人都在追逐名利時，你要聽見那微小的聲音：「孩子，出來吧，那不是你的家。」<br><br>「出來」需要勇氣，因為這意味著與眾不同，甚至可能被孤立。但這是一個救命的呼召，因為巴比倫即將傾倒。",
+                meditation: [
+                    "你的心是否已經不知不覺在「巴比倫」安家落戶了？",
+                    "「出來」意味著與眾不同，甚至被排擠。你願意為了聖潔而付上這個代價嗎？"
+                ],
+                prayer: "聖潔的主，巴比倫的霓虹燈太迷人，我常迷失在其中。求祢喚醒我的靈魂，讓我聽見祢的呼召：「從那城出來！」賜我力量斬斷對罪中之樂的依戀，在這個彎曲悖謬的世代，做祢光明的子女。"
+            },
+            {
+                day: 24,
+                title: "繁華背後的虛空",
+                ref: "啟示錄 18:10, 17",
+                scripture: "「禍哉，禍哉……一時之間，這麼多的財富就歸於無有了。」",
+                content: "巴比倫的傾倒不在於漫長的衰退，而在於「一時之間」。經文反覆強調這個詞，震驚了所有依靠她的人。股票崩盤、公司倒閉、健康亮紅燈，往往都是「一時之間」發生的。<br><br>我們窮盡一生累積的財富，可能瞬間歸零。這段經文不是要我們恐懼，而是要我們清醒：不要把安全感建立在會瞬間消失的事物上。唯有遵行神旨意的，永遠長存。<br><br>當我們看清世上的繁華不過是曇花一現，我們就會懂得如何智慧地使用金錢，而不是被金錢奴役。",
+                meditation: [
+                    "如果你擁有的財富在「一時之間」歸於無有，你的生命還剩下什麼？",
+                    "你現在投資的時間和精力，是為了那會朽壞的，還是為了永恆的？"
+                ],
+                prayer: "主啊，我看見世上的財富如鷹飛去，繁華如夢一場。求祢教導我投資永恆，不將指望寄託在無定的錢財上，而是倚靠那厚賜百物給我們享受的神。願我的生命建立在永遠長存的磐石上。"
+            },
+            {
+                day: 25,
+                title: "為那一天妝扮自己",
+                ref: "啟示錄 19:7-8",
+                scripture: "「我們要歡喜快樂……因為羔羊的婚期到了，他的新娘也自己預備好了，她蒙恩得穿明亮潔白的細麻衣：這細麻衣就是聖徒們的義行。」",
+                content: "這是宇宙歷史最高潮的時刻——婚禮。教會（新娘）終於要與基督（新郎）永遠結合。新娘的美麗不在於外在的珠寶，而在於「明亮潔白的細麻衣」，經文解釋這是「聖徒們的義行」。<br><br>我們今天的每一個順服、每一個善行、每一次為了主而忍耐，都在編織這件嫁衣。你在地上的生活，就是為天上的婚禮做準備。<br><br>這給了我們行善的動力。每一個無人知曉的善行，每一次隱藏的犧牲，主都看在眼裡，並將其織成你那件榮耀的禮服。",
+                meditation: [
+                    "如果今天就是婚禮，你的「嫁衣」（義行）預備好了嗎？還是衣衫襤褸？",
+                    "想到你所做的一切微小善事，神都看在眼裡並織成禮服，這給你什麼動力？"
+                ],
+                prayer: "親愛的新郎耶穌，我渴望那與祢面對面的日子。求祢幫助我警醒度日，不沾染世俗的污穢。願我每天的生活，都是為了編織那件潔白的細麻衣。當那天來到時，願我能歡喜快樂地展現在祢面前。"
+            },
+            {
+                day: 26,
+                title: "萬王之王的真面目",
+                ref: "啟示錄 19:11, 16",
+                scripture: "「我觀看，看見天開了。有一匹白馬，騎在馬上的稱為『誠信』、『真實』……在他衣服和大腿上寫著『萬王之王，萬主之主』的名號。」",
+                content: "耶穌第一次來時，是溫柔的嬰孩，騎著驢駒；但當祂再來時，是威嚴的君王，騎著白馬。祂的名字是「誠信真實」，代表祂會兌現所有的應許與審判。<br><br>我們常把耶穌想像得太過柔弱，以致於我們不怕祂，甚至輕慢祂。但啟示錄揭示了祂的真面目：祂是全宇宙的統帥。這位大有能力的君王是你的主，也是你的保護者。<br><br>知道我們的主是萬王之王，我們就不必向地上的任何權勢低頭。我們在祂的威嚴中，找回尊嚴與勇氣。",
+                meditation: [
+                    "你心中的耶穌形象，是只有慈愛，還是也有威嚴？",
+                    "知道你的主是「萬王之王」，這如何改變你面對地上權勢（老闆、政權）的態度？"
+                ],
+                prayer: "萬王之王，萬主之主，我俯伏在祢腳前。祢不只是我的朋友，更是我的君王。求祢除去我心中對祢的輕慢，賜我敬畏的心。在祢的威嚴中，我找到最大的安全感，因為這位全能的王，竟然愛我到底。"
+            },
+            {
+                day: 27,
+                title: "案卷展開的時候",
+                ref: "啟示錄 20:12, 15",
+                scripture: "「我又看見死了的人……都站在寶座前。案卷都展開了，並另有一卷展開，就是生命冊……凡名字沒有記在生命冊上的人，就被扔進火湖裏。」",
+                content: "這是一個嚴肅的時刻。每一個人，無論生前多麼顯赫或卑微，都要站在白色大寶座前。這裡有兩類書卷：一是記錄行為的「案卷」，一是記錄恩典的「生命冊」。<br><br>如果按行為受審，沒有人能站立得住；唯有名字記在羔羊生命冊上的，才能免去火湖的刑罰。這提醒我們：救恩是恩典，但審判是真實的。確信自己的名字在冊上，是人生最大的福氣。<br><br>這也激勵我們去傳福音。想到那些名字尚未在冊上的親友，我們豈能無動於衷？",
+                meditation: [
+                    "想像那一天，案卷展開，你的一生被陳列出來。你有把握面對嗎？",
+                    "你的名字在生命冊上，這份確據如何影響你對死亡的看法？"
+                ],
+                prayer: "公義的審判者，想到那審判的大日，我心存敬畏。謝謝祢，我的名字能寫在生命冊上，不是因為我做得好，而是因為羔羊的代贖。求祢讓我常存感恩的心，並迫切地為那些名字尚未在冊上的親友禱告。"
+            },
+            {
+                day: 28,
+                title: "神親自搬家",
+                ref: "啟示錄 21:3-4",
+                scripture: "「看哪，神的帳幕在人間！他要和他們同住……神要擦去他們一切的眼淚；不再有死亡，也不再有悲哀……」",
+                content: "天堂最美好的，不是黃金街道或碧玉城牆，而是「神與人同住」。在舊約，神住在至聖所，人不可靠近；現在，神親自搬家到人間，與我們永遠在一起。<br><br>在那裡，祂要做的第一件事，是「擦去眼淚」。這是何等溫柔的動作！所有的委屈、病痛、離別，都將成為過去。這不是童話故事，這是神對受苦兒女的終極承諾。<br><br>今天的苦難之所以能忍受，是因為我們知道，這一切終將結束，而那美好的相聚將永不結束。",
+                meditation: [
+                    "你現在有什麼「眼淚」（痛苦、遺憾）是渴望被神擦去的？",
+                    "「不再有死亡和悲哀」，這個盼望如何幫助你忍受現在暫時的痛苦？"
+                ],
+                prayer: "親愛的天父，謝謝祢應許要永遠與我們同住。當我在世上經歷生離死別、痛苦眼淚時，求祢讓我不絕望。我翹首盼望那一天，祢親手擦乾我的淚痕，所有破碎都被修復。這榮耀的盼望是我今天的力量。"
+            },
+            {
+                day: 29,
+                title: "生命水的滋潤",
+                ref: "啟示錄 22:1-2",
+                scripture: "「天使又讓我看一道生命水的河……在河的兩邊有生命樹……樹上的葉子可作醫治萬民之用。」",
+                content: "創世記中因為罪而失去的生命樹，在啟示錄中失而復得。這條從寶座流出的生命河，帶來了完全的醫治與恢復。<br><br>在現代都市，我們身心靈常處於乾渴、受傷的狀態。我們尋找各種方法（娛樂、購物、藥物）來止渴療傷，卻只能暫時緩解。唯有神那裡有源源不絕的活水。現在，你就可以在禱告中，預嘗這生命水的滋潤。<br><br>不需要等到將來，今天，聖靈就是那活水，可以滋潤你的枯乾，醫治你的創傷。",
+                meditation: [
+                    "你現在覺得靈魂乾渴嗎？你通常喝什麼來解渴？",
+                    "「葉子可作醫治之用」，你的生命中有哪部分最需要神的醫治？"
+                ],
+                prayer: "生命的源頭，我的心渴慕祢，如鹿切慕溪水。這世界的井水喝了還要再渴，求祢將那生命水的河引流到我心中。醫治我的創傷，滋潤我的乾枯，讓我的生命重新結出果子，充滿屬天的活力。"
+            },
+            {
+                day: 30,
+                title: "最深的渴望",
+                ref: "啟示錄 22:20-21",
+                scripture: "「證明這些事的說：『是的，我必快來！』阿們！主耶穌啊，我願你來！」",
+                content: "整本聖經結束在一個急切的呼求：「我願你來！」這也是歷史歷代教會最深的渴望。<br><br>如果你在這個世界上過得太舒服，你不會希望耶穌快來；如果你深愛這地上的國，你會害怕祂來。但對於一個認識主愛、並看透世界本質的「僕人」來說，沒有什麼比見到主面更美好的事了。這不是厭世，而是對更美家鄉的嚮往。<br><br>這30天的旅程結束了，但我們對主的渴望才剛剛開始。願這句話也成為你每天的禱告：主耶穌啊，我願祢來！",
+                meditation: [
+                    "說實話，你真的希望耶穌「今天」就來嗎？如果是，為什麼？如果不是，你在留戀什麼？",
+                    "經過這30天的旅程，你對耶穌、對苦難、對未來的看法有了什麼改變？"
+                ],
+                prayer: "親愛的主耶穌，旅程的最後，我只剩下一個禱告：願祢快來！雖然我在地上還有責任，還有未完成的事，但我知道，祢才是我最終的歸宿。謝謝祢透過《啟示錄》告訴我，祢掌管一切，祢愛我到底。願我每天存著盼望，忠心服事，直到見祢面的那一天。"
+            }
+        ];
+
+        // State
+        let currentDayIndex = 0;
+
+        // Elements
+        const dayListEl = document.getElementById('dayList');
+        const dayTitleEl = document.getElementById('dayTitle');
+        const scriptureRefEl = document.getElementById('scriptureRef');
+        const scriptureTextEl = document.getElementById('scriptureText');
+        const devotionalTextEl = document.getElementById('devotionalText');
+        const meditationListEl = document.getElementById('meditationList');
+        const prayerTextEl = document.getElementById('prayerText');
+        const currentDateDisplayEl = document.getElementById('currentDateDisplay');
+        const progressDisplayEl = document.getElementById('progressDisplay');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const overlay = document.getElementById('overlay');
+        const contentContainer = document.getElementById('contentContainer');
+
+        // Initialize
+        function init() {
+            renderDayList();
+            loadDay(0);
+            
+            // Event Listeners
+            prevBtn.addEventListener('click', () => changeDay(-1));
+            nextBtn.addEventListener('click', () => changeDay(1));
+            
+            menuBtn.addEventListener('click', toggleSidebar);
+            closeSidebar.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+        }
+
+        // Render Sidebar List
+        function renderDayList() {
+            dayListEl.innerHTML = devotionals.map((devotional, index) => `
+                <button 
+                    onclick="loadDay(${index}); closeSidebarIfMobile()"
+                    class="w-full text-left px-6 py-4 border-b border-gray-50 hover:bg-blue-50 transition-colors duration-200 group focus:outline-none ${index === 0 ? 'active-day' : ''}"
+                    id="day-btn-${index}"
+                >
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 group-hover:text-blue-400">Day ${devotional.day}</span>
+                        ${index === currentDayIndex ? '<i class="fas fa-chevron-right text-xs text-blue-500"></i>' : ''}
+                    </div>
+                    <div class="text-sm font-medium text-slate-700 mt-1 truncate group-hover:text-blue-700">${devotional.title}</div>
+                </button>
+            `).join('');
+        }
+
+        // Load Content
+        function loadDay(index) {
+            if (index < 0 || index >= devotionals.length) return;
+            
+            currentDayIndex = index;
+            const data = devotionals[index];
+
+            // Animate transition
+            contentContainer.classList.remove('fade-in');
+            void contentContainer.offsetWidth; // trigger reflow
+            contentContainer.classList.add('fade-in');
+
+            // Update DOM
+            currentDateDisplayEl.textContent = `Day ${data.day}`;
+            progressDisplayEl.textContent = `${data.day} / ${devotionals.length}`;
+            dayTitleEl.textContent = data.title;
+            scriptureRefEl.textContent = data.ref;
+            scriptureTextEl.textContent = data.scripture;
+            devotionalTextEl.innerHTML = data.content;
+            
+            meditationListEl.innerHTML = data.meditation.map(item => `
+                <li class="flex items-start">
+                    <span class="text-amber-500 mr-3 mt-1.5 text-xs"><i class="fas fa-circle"></i></span>
+                    <span class="leading-relaxed">${item}</span>
+                </li>
+            `).join('');
+
+            prayerTextEl.textContent = data.prayer;
+
+            // Update Navigation State
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === devotionals.length - 1;
+            nextBtn.innerHTML = index === devotionals.length - 1 ? '完成旅程 <i class="fas fa-check ml-2"></i>' : '下一天 <i class="fas fa-arrow-right ml-2"></i>';
+
+            // Update Sidebar Active State
+            document.querySelectorAll('#dayList button').forEach(btn => btn.classList.remove('active-day'));
+            const activeBtn = document.getElementById(`day-btn-${index}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active-day');
+                // Scroll sidebar to active element
+                activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            // Scroll to top of content
+            document.getElementById('mainContent').scrollTop = 0;
+        }
+
+        function changeDay(offset) {
+            loadDay(currentDayIndex + offset);
+        }
+
+        // Mobile Sidebar Logic
+        function toggleSidebar() {
+            const isClosed = sidebar.classList.contains('-translate-x-full');
+            
+            if (isClosed) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden', 'opacity-0');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function closeSidebarIfMobile() {
+            if (window.innerWidth < 768) { // md breakpoint
+                toggleSidebar();
+            }
+        }
+
+        // Run
+        init();
+
+    </script>
+</body>
+</html>
